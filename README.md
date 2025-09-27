@@ -147,7 +147,8 @@ meli-inventory-solution/
 ```
 ### Generating the code
 To generate the code for the entire solution, including the code contained within this readme file, interactive prompts were used with the agent and the editing functionality of the Copilot plugin in the IDE. However, due to the free license's limitation on saving the history of all interactions, details of the prompts used could not be retrieved.
-However, an example of a prompt used to generate the code for the "Check Inventory Item" function is included below:
+
+However, some examples of a prompt used to generate the code for the project is included below:
 ```
 Dado el archivo adjunto xml de draw.io que contiene el diagrama de componentes C4 de una solucion serverless en AWS, genera el codigo en python para una lambda de AWS que implemente la funcionalidad de consultar el inventario de un item especifico, siguiendo las buenas practicas de desarrollo y utilizando las librerias mas comunes para este proposito.
 ```
