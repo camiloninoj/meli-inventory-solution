@@ -1,0 +1,72 @@
+openapi: "3.0.1"
+info:
+  title: "Inventory Management API"
+  version: "1.0.0"
+paths:
+  /inventory/{itemId}:
+    get:
+      operationId: "checkInventory"
+      parameters:
+        - name: "itemId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Item inventory found"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryResponse"
+        404:
+          description: "Item not found"
+      x-amazon-apigateway-integration:
+        uri: "${check_inventory_lambda_arn}"
+        httpMethod: "POST"
+        type: "aws_proxy"
+        passthroughBehavior: "when_no_match"
+    put:
+      operationId: "saveInventory"
+      parameters:
+        - name: "itemId"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InventoryUpdate"
+      responses:
+        200:
+          description: "Inventory updated successfully"
+        400:
+          description: "Invalid input"
+      x-amazon-apigateway-integration:
+        uri: "${save_inventory_lambda_arn}"
+        httpMethod: "POST"
+        type: "aws_proxy"
+        passthroughBehavior: "when_no_match"
+
+components:
+  schemas:
+    InventoryResponse:
+      type: "object"
+      properties:
+        itemId:
+          type: "string"
+        quantity:
+          type: "integer"
+        lastUpdate:
+          type: "string"
+          format: "date-time"
+    InventoryUpdate:
+      type: "object"
+      properties:
+        quantity:
+          type: "integer"
+      required:
+        - quantity
